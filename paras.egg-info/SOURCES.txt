@@ -1,0 +1,12 @@
+pyproject.toml
+setup.py
+domain_extraction/__init__.py
+domain_extraction/extract_active_site.py
+domain_extraction/extract_full_adomain.py
+domain_extraction/extract_full_adomain_mibig.py
+domain_extraction/extract_stach.py
+domain_extraction/get_val_domains.py
+paras.egg-info/PKG-INFO
+paras.egg-info/SOURCES.txt
+paras.egg-info/dependency_links.txt
+paras.egg-info/top_level.txt
