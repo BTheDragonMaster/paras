@@ -1,12 +1,12 @@
 from typing import List
 import os
 
-import paras.data
+import paras.data.positions
 
-APOSITION_FILE = os.path.join(os.path.dirname(paras.data.__file__), 'Apositions.txt')
-APOSITION_FILE_34 = os.path.join(os.path.dirname(paras.data.__file__), 'Apositions_34.txt')
-APOSITION_FILE_HMM = os.path.join(os.path.dirname(paras.data.__file__), 'Apositions_hmm.txt')
-APOSITION_FILE_34_HMM = os.path.join(os.path.dirname(paras.data.__file__), 'Apositions_34_hmm.txt')
+APOSITION_FILE = os.path.join(os.path.dirname(paras.data.positions.__file__), 'Apositions.txt')
+APOSITION_FILE_34 = os.path.join(os.path.dirname(paras.data.positions.__file__), 'Apositions_34.txt')
+APOSITION_FILE_HMM = os.path.join(os.path.dirname(paras.data.positions.__file__), 'Apositions_hmm.txt')
+APOSITION_FILE_34_HMM = os.path.join(os.path.dirname(paras.data.positions.__file__), 'Apositions_34_hmm.txt')
 START_POSITION = 66
 
 

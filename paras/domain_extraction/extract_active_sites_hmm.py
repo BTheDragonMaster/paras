@@ -1,21 +1,12 @@
 #!/usr/bin/env python
 
-from typing import List, Tuple, Dict, Optional, Any, Union, IO
-from pathlib import Path
-
 import os
 from sys import argv
-from pprint import pprint
-import subprocess
 from Bio import SearchIO
 
 from paras.domain_extraction.extract_adomains import run_hmmscan, HMM_FILE, TEMP_DIR
-from paras.common.clear_temp import clear_temp
-from paras.common.fasta import read_fasta, write_fasta
+from paras.common.fasta import write_fasta
 from paras.domain_extraction.read_positions import APOSITION_FILE_HMM, APOSITION_FILE_34_HMM, read_positions, get_reference_positions_hmm
-
-import paras.data.temp
-import paras.data.hmm
 
 
 def parse_hmm_results(hmm_results, out_dir):
@@ -101,7 +92,6 @@ def parse_hmm_results(hmm_results, out_dir):
                         domain_to_stach[hsp.query.id] = stachelhaus + domain_to_stach[hsp.query.id]
 
                         domain_to_range[hsp.query.id][0] = hsp.hit_start
-
 
     if not os.path.exists(out_dir):
         os.mkdir(out_dir)

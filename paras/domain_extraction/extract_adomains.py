@@ -201,7 +201,7 @@ def find_adomains(fasta_in, out_dir):
 
     """
 
-    #Remove extension from file string
+    # Remove extension from file string
     file_label = '.'.join(fasta_in.split('.')[:-1])
 
     hmm_out = os.path.join(TEMP_DIR, f'{file_label}_.hmm_result')

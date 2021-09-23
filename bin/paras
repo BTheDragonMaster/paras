@@ -8,11 +8,11 @@ from sklearn.ensemble import RandomForestClassifier
 
 from paras.domain_extraction.extract_residues import extract_stach_codes
 import paras.data
-import paras.data.train_and_test_data.alignments
+import paras.data.train_and_test_data.structure_alignments
 from paras.feature_extraction.get_sequence_features import get_features, to_feature_vectors
 
 
-ALIGNMENT_FILE = os.path.join(os.path.dirname(paras.data.train_and_test_data.alignments.__file__), 'training_alignment.fasta')
+ALIGNMENT_FILE = os.path.join(os.path.dirname(paras.data.train_and_test_data.structure_alignments.__file__), 'training_alignment.fasta')
 CLASSIFIER_FILE = os.path.join(os.path.dirname(paras.data.__file__), 'paras.classifier')
 
 
