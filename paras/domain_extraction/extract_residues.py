@@ -3,17 +3,16 @@
 from typing import List
 
 import os
-import subprocess
 from sys import argv
 
 from paras.common.fasta import read_fasta, write_fasta
 from paras.domain_extraction.read_positions import POSITIONS_STACH, POSITIONS_34, get_reference_positions
 from paras.domain_extraction.align import align_adomain
-from paras.common.clear_temp import clear_temp
 import paras.data
 
 REF_SEQUENCE = "BAA00406.1.A1"
 ADOMAIN_ALIGNMENT_FILE = os.path.join(os.path.dirname(paras.data.__file__), 'A_domains_structure_alignment.fasta')
+
 
 def extract_stach_region(alignment, ref_sequence, out_file):
     id_to_seq = read_fasta(alignment)
@@ -21,7 +20,6 @@ def extract_stach_region(alignment, ref_sequence, out_file):
     position_start = POSITIONS_STACH[0]
     position_end = POSITIONS_STACH[-1]
     seq_range = [position_start, position_end]
-    print(seq_range)
     aligned_positions = get_reference_positions(seq_range, reference_alignment)
 
     id_to_truncated_seq = {}
@@ -31,7 +29,7 @@ def extract_stach_region(alignment, ref_sequence, out_file):
     write_fasta(remove_gaps(id_to_truncated_seq), out_file)
 
 
-def extract_stach_codes(fasta, out_dir, alignment_file):
+def extract_stach_codes(fasta, alignment_file):
 
     id_to_seq = read_fasta(fasta)
 
@@ -39,6 +37,7 @@ def extract_stach_codes(fasta, out_dir, alignment_file):
     id_to_34 = {}
 
     for seq_id, seq in id_to_seq.items():
+        print(seq_id)
         aligned_domain, aligned_reference = align_adomain(seq_id, seq, alignment_file)
         aligned_positions_stach = get_reference_positions(POSITIONS_STACH, aligned_reference)
         aligned_positions_34 = get_reference_positions(POSITIONS_34, aligned_reference)
@@ -55,11 +54,8 @@ def extract_stach_codes(fasta, out_dir, alignment_file):
         active_site = ''.join(active_site)
         id_to_34[seq_id] = active_site
 
-    if not os.path.exists(out_dir):
-        os.mkdir(out_dir)
+    return id_to_stach, id_to_34
 
-    write_fasta(id_to_stach, os.path.join(out_dir, 'stachelhaus.fasta'))
-    write_fasta(id_to_34, os.path.join(out_dir, 'active_site_34.fasta'))
 
 def remove_gaps(id_to_seq):
 
@@ -88,7 +84,6 @@ def remove_gaps(id_to_seq):
         cleaned_id_to_seq[seq_id] = cleaned_seq
 
     return cleaned_id_to_seq
-
 
 
 def get_stach_aa_signature(reference_alignment: str, domain_alignment: str) -> str:
@@ -127,6 +122,7 @@ def extract(sequence: str, positions: List[int]) -> str:
         seq.append(aa)
     return "".join(seq)
 
+
 def write_tabular(id_to_signature, out_file):
     with open(out_file, 'w') as out:
         for id, signature in id_to_signature.items():
@@ -136,7 +132,14 @@ def write_tabular(id_to_signature, out_file):
 if __name__ == "__main__":
     fasta = argv[1]
     alignment = argv[2]
-    extract_stach_codes(fasta, 'sequence_alignment', alignment)
+    out = argv[3]
+    id_to_stach, id_to_34 = extract_stach_codes(fasta, alignment)
+
+    if not os.path.exists(out):
+        os.mkdir(out)
+
+    write_fasta(id_to_stach, os.path.join(out, 'stachelhaus.fasta'))
+    write_fasta(id_to_34, os.path.join(out, 'active_site_34.fasta'))
 
 
 

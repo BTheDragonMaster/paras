@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+from paras.common.fasta import read_fasta, write_fasta
+
 from typing import List, Tuple, Dict, Optional, Any, Union, IO
 from pathlib import Path
 
@@ -17,33 +19,6 @@ START_POSITION = 66
 
 REF_SEQUENCE = "BAA00406.1.A1"
 
-def read_fasta(fasta_dir):
-    with open(fasta_dir, 'r') as fasta_file:
-        fasta_dict = {}
-        sequence = []
-        for line in fasta_file:
-            line = line.strip()
-
-            if line.startswith(">"):
-                if sequence:
-                    fasta_dict[ID] = ''.join(sequence)
-
-                    ID = line[1:]
-                    sequence = []
-                else:
-                    ID = line[1:]
-
-            else:
-                sequence.append(line)
-
-        fasta_dict[ID] = ''.join(sequence)
-        fasta_file.close()
-    return fasta_dict
-
-def write_fasta(fasta_dict, out_dir):
-    with open(out_dir, 'w') as out_file:
-        for id, sequence in fasta_dict.items():
-            out_file.write(f'>{id}\n{sequence}\n')
 
 def run_muscle(in_file, out_file):
 
@@ -51,9 +26,9 @@ def run_muscle(in_file, out_file):
 
     subprocess.check_call(command)
 
+
 def get_adomain_alignment(domain_name, domain_sequence):
     # Run muscle and collect sequence positions from file
-
 
     in_file = open('temp_in.common', 'w')
 
@@ -66,6 +41,7 @@ def get_adomain_alignment(domain_name, domain_sequence):
     reference_alignment = alignments[REF_SEQUENCE]
 
     return reference_alignment, domain_alignment
+
 
 #stolen from nrps_predictor.py
 def read_positions(filename: str, start_position: int) -> List[int]:
@@ -86,6 +62,7 @@ def read_positions(filename: str, start_position: int) -> List[int]:
     data.close()
     return results
 
+
 def get_stach_aa_signature(reference_alignment: str, domain_alignment: str) -> str:
     """ Extract stachelhaus residues from A domains """
     positions = read_positions(APOSITION_FILENAME, START_POSITION)
@@ -95,6 +72,7 @@ def get_stach_aa_signature(reference_alignment: str, domain_alignment: str) -> s
     query_sig_seq = extract(domain_alignment, poslist)
 
     return query_sig_seq
+
 
 #stolen from nrps_predictor.py
 def build_position_list(positions: List[int], reference_seq: str) -> List[int]:
@@ -116,6 +94,7 @@ def build_position_list(positions: List[int], reference_seq: str) -> List[int]:
                 poslist.append(i)
             position += 1
     return poslist
+
 
 #stolen from nrps_predictor.py
 def extract(sequence: str, positions: List[int]) -> str:
@@ -145,7 +124,6 @@ def extract(sequence: str, positions: List[int]) -> str:
     return ''.join(gapless)
 
 
-
 def write_tabular(id_to_signature, out_file):
     with open(out_file, 'w') as out:
         for id, signature in id_to_signature.items():
@@ -166,4 +144,3 @@ if __name__ == "__main__":
         id_to_signature[id] = signature
 
     write_tabular(id_to_signature, out_table)
-

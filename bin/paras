@@ -1,0 +1,40 @@
+#!/usr/bin/env python
+
+import os
+from joblib import load
+from sys import argv
+
+from sklearn.ensemble import RandomForestClassifier
+
+from paras.domain_extraction.extract_residues import extract_stach_codes
+import paras.data
+import paras.data.train_and_test_data.alignments
+from paras.feature_extraction.get_sequence_features import get_features, to_feature_vectors
+
+
+ALIGNMENT_FILE = os.path.join(os.path.dirname(paras.data.train_and_test_data.alignments.__file__), 'training_alignment.fasta')
+CLASSIFIER_FILE = os.path.join(os.path.dirname(paras.data.__file__), 'paras.classifier')
+
+
+def run_paras(sequence_file, out_file):
+    id_to_stach, id_to_34 = extract_stach_codes(sequence_file, ALIGNMENT_FILE)
+    id_to_features = get_features(id_to_34)
+    ids, feature_vectors = to_feature_vectors(id_to_features)
+    classifier = load(CLASSIFIER_FILE)
+    predictions = classifier.predict(feature_vectors)
+
+    with open(out_file, 'w') as out:
+        out.write('id\tprediction\n')
+        for i, seq_id in enumerate(ids):
+            prediction = predictions[i]
+            out.write(f'{seq_id}\t{prediction}\n')
+
+
+if __name__ == "__main__":
+    fasta_file = argv[1]
+    out_file = 'paras_results.txt'
+
+    run_paras(fasta_file, out_file)
+
+
+

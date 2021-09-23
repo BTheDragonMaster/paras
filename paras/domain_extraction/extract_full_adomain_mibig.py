@@ -7,32 +7,12 @@ from pathlib import Path
 
 from Bio import SearchIO
 
+from paras.common.fasta import read_fasta
+
 path = Path(os.getcwd())
 
 HMM_DIR = f'{path}/data/AMP-binding_full.hmm'
 
-def read_fasta(fasta_dir):
-    with open(fasta_dir, 'r') as fasta_file:
-        fasta_dict = {}
-        sequence = []
-        for line in fasta_file:
-            line = line.strip()
-
-            if line.startswith(">"):
-                if sequence:
-                    fasta_dict[ID] = ''.join(sequence)
-
-                    ID = line[1:]
-                    sequence = []
-                else:
-                    ID = line[1:]
-
-            else:
-                sequence.append(line)
-
-        fasta_dict[ID] = ''.join(sequence)
-        fasta_file.close()
-    return fasta_dict
 
 def run_hmmscan(hmm_dir, fasta_dir, out_dir):
     program = 'hmmscan'
@@ -43,6 +23,7 @@ def run_hmmscan(hmm_dir, fasta_dir, out_dir):
     subprocess.call(command, stdout=out_file)
     out_file.close()
 
+
 def remove_insertions(seq):
     new_seq = []
     for character in seq:
@@ -52,8 +33,10 @@ def remove_insertions(seq):
     new_seq = ''.join(new_seq)
     return new_seq
 
+
 def make_header(ID, hit_id, start, end):
     return f'{ID}|{hit_id}|{start}-{end}'
+
 
 def remove_gaps(sequence):
     new_sequence = []
@@ -75,6 +58,7 @@ def parse_hmm_results(hmm_results, fasta_out):
 
     fasta_file.close()
 
+
 def parse_fasta_id(fasta_id):
     id = fasta_id.split('|')[4]
     hit_id, hit_location = fasta_id.split('|')[-2:]
@@ -83,6 +67,7 @@ def parse_fasta_id(fasta_id):
     hit_start = int(hit_start)
     hit_end = int(hit_end)
     return id, hit_id, hit_start, hit_end
+
 
 def find_amp_n_c_pairs(fasta_dir, original_fasta_dir, new_fasta_dir):
     fasta = read_fasta(fasta_dir)

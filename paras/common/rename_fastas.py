@@ -22,5 +22,6 @@ def rename_trimmed_alignment(fasta_file, out_file):
 
     write_fasta(edited_domain_to_sequence, out_file)
 
+
 if __name__ == "__main__":
-    rename_trimmed_alignment(argv[1], argv[2])
+    rename_structural_alignment(argv[1], argv[2])

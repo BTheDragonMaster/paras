@@ -14,6 +14,9 @@ setup(
     packages=find_packages(),
     package_data={"": ["AMP-binding_full.hmm*",
                        'Apositions*',
-                       "*.fasta"]},
+                       "*.fasta",
+                       "*.txt",
+                       "*.classifier"]},
     install_requires=[],
+    scripts=['bin/paras']
 )
