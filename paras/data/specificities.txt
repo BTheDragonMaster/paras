@@ -691,7 +691,7 @@ AAA93464.1.A1	"salicylic acid, 2,3-dihydroxybenzoic acid"
 BAA83993.1.A1	Leucine
 BAA83993.1.A2	Aspartic Acid
 AAN07012.1.A1	Asparagine
-CAE11250.1.	Asparagine
+CAE11250.1.A1	Asparagine
 AAO62587.1.A1	"Leucine, Arginine"
 AAO62587.1.A2	Aspartic Acid
 YP_702283.1.A1	Threonine
