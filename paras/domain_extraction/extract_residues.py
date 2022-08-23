@@ -29,16 +29,30 @@ def extract_stach_region(alignment, ref_sequence, out_file):
     write_fasta(remove_gaps(id_to_truncated_seq), out_file)
 
 
+def stach_to_challis(id_to_stach):
+    id_to_challis = {}
+    for id, stach in id_to_stach.items():
+        challis = stach[:8]
+        id_to_challis[id] = challis
+
+    return id_to_challis
+
+
 def extract_stach_codes(fasta, alignment_file):
 
     id_to_seq = read_fasta(fasta)
+    aligned_id_to_seq = read_fasta(alignment_file)
 
     id_to_stach = {}
     id_to_34 = {}
 
     for seq_id, seq in id_to_seq.items():
-        print(seq_id)
-        aligned_domain, aligned_reference = align_adomain(seq_id, seq, alignment_file)
+        if REF_SEQUENCE not in aligned_id_to_seq or seq_id not in aligned_id_to_seq:
+            aligned_domain, aligned_reference = align_adomain(seq_id, seq, alignment_file)
+        else:
+            aligned_domain = aligned_id_to_seq[seq_id]
+            aligned_reference = aligned_id_to_seq[REF_SEQUENCE]
+
         aligned_positions_stach = get_reference_positions(POSITIONS_STACH, aligned_reference)
         aligned_positions_34 = get_reference_positions(POSITIONS_34, aligned_reference)
 

@@ -18,5 +18,5 @@ setup(
                        "*.txt",
                        "*.classifier"]},
     install_requires=[],
-    scripts=['bin/paras']
+    scripts=['bin/paras', 'bin/paras-residues', 'bin/paras-test']
 )

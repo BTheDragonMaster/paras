@@ -12,6 +12,7 @@ import paras.data
 
 SPECIFICITIES_FILE = os.path.join(os.path.dirname(paras.data.__file__), 'specificities.txt')
 SPECIFICITIES = parse_specificities(SPECIFICITIES_FILE)
+REFERENCE_SEQUENCE = os.path.join(os.path.dirname(paras.data.__file__), 'reference_sequence.fasta')
 
 
 def train_paras(sequence_file, alignment_file, out):

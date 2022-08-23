@@ -35,5 +35,6 @@ def align_adomain(domain_name, domain_sequence, alignment_file):
 
     # Aligned sequence of 1AMU reference sequence
     aligned_reference = id_to_alignment[REF_SEQUENCE]
+    print(aligned_reference)
 
     return aligned_domain, aligned_reference
