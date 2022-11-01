@@ -3,7 +3,7 @@ import subprocess
 from setuptools import setup, find_packages
 from setuptools.command.install import install
 
-VERSION = '0.0.2'
+VERSION = '0.0.3'
 DESCRIPTION = 'PARAS: Predictive Algorithm for Resolving A-domain Specificity'
 LONG_DESCRIPTION = 'Detect NRPS AMP-binding domains from an aa sequence and predict their substrate specificity'
 
