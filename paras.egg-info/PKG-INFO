@@ -1,12 +1,9 @@
 Metadata-Version: 2.1
 Name: paras
-Version: 0.0.1
+Version: 0.0.2
 Summary: PARAS: Predictive Algorithm for Resolving A-domain Specificity
-Home-page: UNKNOWN
 Author: Barbara Terlouw
 Author-email: barbara.terlouw@wur.nl
-License: UNKNOWN
-Platform: UNKNOWN
+License-File: LICENSE.txt
 
 Detect NRPS AMP-binding domains from an aa sequence and predict their substrate specificity
-

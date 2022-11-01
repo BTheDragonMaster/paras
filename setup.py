@@ -1,8 +1,18 @@
-from setuptools import setup, find_packages
+import subprocess
 
-VERSION = '0.0.1'
+from setuptools import setup, find_packages
+from setuptools.command.install import install
+
+VERSION = '0.0.2'
 DESCRIPTION = 'PARAS: Predictive Algorithm for Resolving A-domain Specificity'
 LONG_DESCRIPTION = 'Detect NRPS AMP-binding domains from an aa sequence and predict their substrate specificity'
+
+
+class TrainParas(install):
+    def run(self):
+        #open("/Users/barbara/dummydummy", "w").write(str(glob.glob("bin/*")))
+        subprocess.check_call(["python", "-c", "import os"])
+        install.run(self)
 
 setup(
     name="paras",
@@ -17,6 +27,9 @@ setup(
                        "*.fasta",
                        "*.txt",
                        "*.classifier"]},
-    install_requires=[],
+    install_requires=["scikit-learn",
+                      "biopython",
+                      "joblib"],
     scripts=['bin/paras', 'bin/paras-residues', 'bin/paras-test']
 )
+

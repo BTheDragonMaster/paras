@@ -1,0 +1,3 @@
+id	prediction_1	probability_1	prediction_2	probability_2	prediction_3	probability_3
+AAG02364.1.A1|1|34-510	beta-alanine	0.71	cysteine	0.09	tryptophan	0.04
+AAG02364.1.A2|1|26-508	cysteine	0.88	beta-alanine	0.12	valine	0.0
