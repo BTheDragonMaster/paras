@@ -1,0 +1,44 @@
+import argparse
+import os
+from paras.common.fasta import read_fasta
+from paras.common.parsers import parse_specificities
+from paras.feature_extraction.get_sequence_features import get_features, to_feature_vectors
+from joblib import dump
+from sklearn.ensemble import RandomForestClassifier
+
+
+def make_parser():
+    parser = argparse.ArgumentParser(description="Extract active site residues from adenylation domains.")
+    parser.add_argument('-i', '--input', required=True, type=str, help=".fasta file containing the training sequences.")
+    parser.add_argument('-s', '--specificites', required=True, type=str, help=".txt file containing the specificity for each training sequence.")
+    parser.add_argument('-o', '--output', required=True, type=str, help=".classifier file which will contain the trained classifier")
+    parser.add_argument('-a', '--active_site', action='store_true', help='If specified, input directly uses 34-aa signature.')
+
+    return parser
+
+
+def run():
+    parser = make_parser()
+    args = parser.parse_args()
+    if args.active_site:
+        train_paras(args.input, args.specificities, args.output)
+    else:
+        raise NotImplementedError
+
+
+def train_paras(sequence_file, specificities_file, out):
+    id_to_34 = read_fasta(sequence_file)
+    id_to_spec = parse_specificities(specificities_file)
+    id_to_features = get_features(id_to_34)
+    ids, feature_vectors = to_feature_vectors(id_to_features)
+    response_vector = []
+    for seq_id in ids:
+        response_vector.append(id_to_spec[seq_id])
+
+    paras = RandomForestClassifier(random_state=25)
+    paras.fit(feature_vectors, response_vector)
+
+    dump(paras, out)
+
+if __name__ == "__main__":
+    run()
