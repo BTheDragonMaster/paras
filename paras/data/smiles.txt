@@ -102,6 +102,7 @@ R-beta-methylphenylalanine	C[C@H](C1=CC=CC=C1)[C@@H](C(=O)O)N
 piperazic acid	C1C[C@H](NNC1)C(=O)O
 6,7-dichlorotryptophan	C1=C(Cl)C(Cl)=C2C(=C1)C(=CN2)C[C@@H](C(=O)O)N
 pyrrole-2-carboxylic acid	C1=CNC(=C1)C(=O)O
+5‐chloro‐1‐hydroxypyrrole‐2‐carboxylic acid	ON1C(Cl)=CC=C1C(O)=O
 4S-hydroxylysine	NCC[C@H](O)C[C@@H](C(=O)O)N
 D-leucine	CC(C)C[C@H](C(=O)O)N
 beta-hydroxyphenylalanine	OC(C1=CC=CC=C1)[C@@H](C(=O)O)N
